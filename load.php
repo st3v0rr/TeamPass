@@ -54,7 +54,9 @@ $htmlHeaders = '
         <link rel="stylesheet" href="includes/libraries/Authentication/agses/agses.css" type="text/css" />
 
         <script type="text/javascript" src="includes/js/radioforbuttons/jquery.radiosforbuttons.min.js"></script>
-        <link rel="stylesheet" href="includes/js/radioforbuttons/bootstrap-buttons.min.css" type="text/css" />';
+        <link rel="stylesheet" href="includes/js/radioforbuttons/bootstrap-buttons.min.css" type="text/css" />
+
+        <link rel="stylesheet" href="includes/libraries/Bootstrap/bootstrap.min.css" type="text/css" />';
 // For ITEMS page, load specific CSS files for treeview
 if (isset($_GET['page']) && $_GET['page'] == "items") {
     $htmlHeaders .= '
@@ -70,11 +72,7 @@ if (isset($_GET['page']) && $_GET['page'] == "items") {
         <script type="text/javascript" src="includes/js/multiselect/jquery.multiselect.filter.js"></script>
         <script type="text/javascript" src="includes/js/tinysort/jquery.tinysort.min.js"></script>
         <script type="text/javascript" src="includes/js/verimail/verimail.min.js"></script>
-        <!--
-        <link rel="stylesheet" href="includes/bootstrap/css/bootstrap.min.css" />
-        <script src="includes/bootstrap/js/bootstrap.min.js"></script>
-        -->
-        <link rel="stylesheet" type="text/css" href="includes/css/items.css" />';
+        <!--link rel="stylesheet" type="text/css" href="includes/css/items.css" /-->';
 } elseif (isset($_GET['page']) && $_GET['page'] == "manage_settings") {
     $htmlHeaders .= '
         <link rel="stylesheet" href="includes/js/toggles/css/toggles.css" />
@@ -559,18 +557,18 @@ $htmlHeaders .= '
                 //check if format error
                 if (data.error == "") {
                     if (data.html_json === null) {
-                        $("#last_seen_items_list").html("<li>'.$LANG['none'].'</li>");
+                        $("#menu_last_seen_items").html("<a class=\'dropdown-item\'>'.$LANG['none'].'</a>");
                     } else {
                         // Prepare HTML
                         var html_list = "";
                         $.each(data.html_json, function(i, value) {
-                           html_list += "<li onclick=\'displayItemNumber("+value.id+", "+value.tree_id+")\'><i class=\'fa fa-hand-o-right\'></i>&nbsp;"+value.label+"</li>";
+                           html_list += "<a class=\'dropdown-item\' onclick=\'displayItemNumber("+value.id+", "+value.tree_id+")\'><i class=\'fa fa-hand-o-right\'></i>&nbsp;"+value.label+"</a>";
                         });
-                        $("#last_seen_items_list").html(html_list);
+                        $("#menu_last_seen_items").html(html_list);
                     }
 
                     // rebuild menu
-                    $("#menu_last_seen_items").menu("refresh");
+                    $("#menu_last_seen_items").load();
 
                     // show notification
                     if (data.existing_suggestions != 0) {

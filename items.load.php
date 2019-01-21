@@ -25,7 +25,7 @@ if (file_exists('../includes/config/tp.config.php')) {
     throw new Exception("Error file '/includes/config/tp.config.php' not exists", 1);
 }
 
-$var['hidden_asterisk'] = '<i class="fa fa-eye fa-border fa-sm tip" title="'.$LANG['show_password'].'"></i>&nbsp;&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>';
+$var['hidden_asterisk'] = '<i class="fa fa-eye fa-sm tip" title="'.$LANG['show_password'].'"></i>&nbsp;&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>&nbsp;<i class="fa fa-asterisk"></i>';
 
 // load csrfprotector
 $csrfp_config = include $SETTINGS['cpassman_dir'].'/includes/libraries/csrfp/libs/csrfp.config.php';
@@ -205,7 +205,7 @@ function ListerItems(groupe_id, restricted, start, stop_listing_current_folder)
         if (start == 0) {
             //clean form
             $('#id_label, #id_pw, #id_email, #id_url, #id_desc, #id_login, #id_info, #id_restricted_to, #id_files, #id_tags, #id_kbs, #item_extra_info, #item_viewed_x_times').html("");
-            $("#items_list").html("<ul class='liste_items 'id='full_items_list'></ul>");
+            $("#items_list").html("<ul class='liste_items list-group' id='full_items_list'></ul>");
         }
         $("#items_list").css("display", "");
 
@@ -237,7 +237,6 @@ function ListerItems(groupe_id, restricted, start, stop_listing_current_folder)
                 }
                 //get data
                 data = prepareExchangedData(data, "decode", "<?php echo $_SESSION['key']; ?>");
-
                 // reset doubleclick prevention
                 requestRunning = false;
 
@@ -449,37 +448,37 @@ function showItemsList(data)
 
         // Prepare item icon
         if (value.canMove === 1 && value.accessLevel === 0) {
-            item_class = "item_draggable";
-            item_span = '<span style="cursor:hand;" class="grippy"><span class="fa fa-sm fa-arrows mi-grey-1"></span>&nbsp;</span>';
+            item_class = "item_draggable list-group-item list-group-item-action";
+            item_span = '<span style="cursor: move;" class="grippy fa fa-lg fa-arrows mi-grey-1"></span>';
         } else {
-            item_class = "item";
-            item_span = '<span style="margin-left:11px;"></span>';
+            item_class = "item list-group-item list-group-item-action";
+            item_span = '<span></span>';
         }
 
         // Prepare error message
         if (value.pw_status === "encryption_error") {
-            pwd_error = '<span class="fa fa-warning fa-sm mi-red tip" title="<?php echo addslashes($LANG['pw_encryption_error']); ?>"></span>&nbsp;';
+            pwd_error = '<span class="fa fa-warning fa-lg mi-red tip" title="<?php echo addslashes($LANG['pw_encryption_error']); ?>"></span>';
         }
 
         // Prepare anyone can modify icon
         if (value.anyone_can_modify === "1") {
-            icon_all_can_modify = '<span class="fa fa-pencil fa-sm mi-grey-1 pointer tip" title="<?php echo addslashes($LANG['item_menu_collab_enable']); ?>" onclick="AfficherDetailsItem(\''+value.item_id+'\',\''+value.sk+'\',\''+value.expired+'\', \''+value.restricted+'\', \''+value.display+'\', \''+value.open_edit+'\', \''+value.reload+'\', \''+value.tree_id+'\')"></span>&nbsp;&nbsp;';
+            icon_all_can_modify = '<span class="fa fa-pencil fa-lg mi-grey-1 pointer tip" title="<?php echo addslashes($LANG['item_menu_collab_enable']); ?>" onclick="AfficherDetailsItem(\''+value.item_id+'\',\''+value.sk+'\',\''+value.expired+'\', \''+value.restricted+'\', \''+value.display+'\', \''+value.open_edit+'\', \''+value.reload+'\', \''+value.tree_id+'\')"></span>&nbsp;&nbsp;';
         }
 
         // Prepare mini icons
         if (value.copy_to_clipboard_small_icons === "1" && value.display_item === 1) {
             // Login icon
             if (value.login !== "") {
-                icon_login = '<span class="fa fa-sm fa-user mi-black mini_login" data-clipboard-text="'+sanitizeString(value.login)+'" title="<?php echo addslashes($LANG['item_menu_copy_login']); ?>" id="minilogin_'+value.item_id+'"></span>&nbsp;';
+                icon_login = '<span class="fa fa-lg fa-user mi-black mini_login" data-clipboard-text="'+sanitizeString(value.login)+'" title="<?php echo addslashes($LANG['item_menu_copy_login']); ?>" id="minilogin_'+value.item_id+'"></span>';
             }
             // Pwd icon
             if (value.pw !== "") {
-                icon_pwd = '<span class="fa fa-sm fa-lock mi-black mini_pw" data-clipboard-text="'+sanitizeString(value.pw)+'" title="<?php echo addslashes($LANG['item_menu_copy_pw']); ?>" data-clipboard-id="'+value.item_id+'" id="minipwd_'+value.item_id+'"></span>&nbsp;';
+                icon_pwd = '<span class="fa fa-lg fa-lock mi-black mini_pw" data-clipboard-text="'+sanitizeString(value.pw)+'" title="<?php echo addslashes($LANG['item_menu_copy_pw']); ?>" data-clipboard-id="'+value.item_id+'" id="minipwd_'+value.item_id+'"></span>';
             }
 
             // Now check if pwd is empty. If it is then warn user
             if (value.pw === "") {
-                pwd_error = '&nbsp;<span class="fa fa-exclamation-circle fa-sm mi-yellow tip" title="<?php echo addslashes($LANG['password_is_empty']); ?>"></span>&nbsp;';
+                pwd_error = '<span class="fa fa-exclamation-circle fa-lg mi-yellow tip" title="<?php echo addslashes($LANG['password_is_empty']); ?>"></span>';
             }
         }
 
@@ -487,35 +486,36 @@ function showItemsList(data)
         if (value.display_item === 1 && value.enable_favourites === "1") {
             if (value.in_favorite === 1) {
                 icon_favorite = '<span id="quick_icon_fav_'+value.item_id+'" title="Manage Favorite" class="cursor tip">' +
-                    '<span class="fa fa-sm fa-star mi-yellow" onclick="ActionOnQuickIcon('+value.item_id+',0)" class="tip"></span>' +
+                    '<span class="fa fa-lg fa-star mi-yellow" onclick="ActionOnQuickIcon('+value.item_id+',0)" class="tip"></span>' +
                     '</span>';
             } else {
                 icon_favorite = '<span id="quick_icon_fav_'+value.item_id+'" title="Manage Favorite" class="cursor tip">' +
-                    '<span class="fa fa-sm fa-star-o mi-black" onclick="ActionOnQuickIcon('+value.item_id+',1)" class="tip"></span>' +
+                    '<span class="fa fa-lg fa-star-o mi-black" onclick="ActionOnQuickIcon('+value.item_id+',1)" class="tip"></span>' +
                     '</span>';
             }
         }
 
         // Prepare Description
+        /*
         if (value.desc !== "") {
             value.desc = '[' + value.desc + ']';
         }
+        */
 
         // Prepare flag
         if (value.expiration_flag !== "") {
-            item_flag = '<i class="fa fa-flag ' + value.expiration_flag + ' fa-sm"></i>&nbsp;';
+            item_flag = '<i class="fa fa-flag ' + value.expiration_flag + ' fa-lg"></i>';
         }
 
         // Appenditem row
         $("#full_items_list").append(
-            '<li name="' + value.label + '" class="'+ item_class + ' trunc_line" id="'+value.item_id+'" data-edition="'+value.open_edit+'">' + item_span +
-            item_flag +
-            '<i class="fa ' + value.perso + ' fa-sm"></i>&nbsp' +
-            '&nbsp;<a id="fileclass'+value.item_id+'" class="file " onclick="AfficherDetailsItem(\''+value.item_id+'\',\''+value.sk+'\',\''+value.expired+'\', \''+value.restricted+'\', \''+value.display+'\', \'\', \''+value.reload+'\', \''+value.tree_id+'\')"  ondblclick="AfficherDetailsItem(\''+value.item_id+'\',\''+value.sk+'\',\''+value.expired+'\', \''+value.restricted+'\', \''+value.display+'\', \''+value.open_edit+'\', \''+value.reload+'\', \''+value.tree_id+'\')"><div class="truncate">'+
-            '<span id="item_label_' + value.item_id + '">' + value.label + '</span>&nbsp;<font size="1px">' +
-            value.desc +
-            '</div></font></a>' +
-            '<span style="float:right;margin-top:2px;">' +
+            '<li name="' + value.label + '" class="'+ item_class + ' trunc_line" id="'+value.item_id+'" data-edition="'+value.open_edit+'">' + item_span + item_flag +
+            '<i class="fa ' + value.perso + ' fa-lg"></i>' +
+            '<a style="cursor: pointer;" id="fileclass'+value.item_id+'"' + 
+            'onclick="AfficherDetailsItem(\''+value.item_id+'\',\''+value.sk+'\',\''+value.expired+'\', \''+value.restricted+'\', \''+value.display+'\', \'\', \''+value.reload+'\', \''+value.tree_id+'\')" ' +
+            'ondblclick="AfficherDetailsItem(\''+value.item_id+'\',\''+value.sk+'\',\''+value.expired+'\', \''+value.restricted+'\', \''+value.display+'\', \''+value.open_edit+'\', \''+value.reload+'\', \''+value.tree_id+'\')"><span class="truncate display-5">'+
+            '<span class="ml-2" id="item_label_' + value.item_id + '">' + value.label + '</span></a>' +
+            '<span style="float:right;margin-top:5px;">' +
             pwd_error +
             icon_all_can_modify +
             icon_login +
@@ -1588,6 +1588,7 @@ function AfficherDetailsItem(id, salt_key_required, expired_item, restricted, di
                     key  : "<?php echo $_SESSION['key']; ?>"
                 },
                 function(data_raw) {
+                    
                     //decrypt data
                     try {
                         data = prepareExchangedData(data_raw , "decode", "<?php echo $_SESSION['key']; ?>");
@@ -1609,9 +1610,9 @@ function AfficherDetailsItem(id, salt_key_required, expired_item, restricted, di
                     $("#pw_shown").val("0");
 
                     // show some info on top
-                    if (data.auto_update_pwd_frequency != "0") var auto_update_pwd = "<i class='fa fa-shield tip' title='<?php echo addslashes($LANG['server_auto_update_password_enabled_tip']); ?>'></i>&nbsp;<b>"+data.auto_update_pwd_frequency+"</b>&nbsp;|&nbsp;";
+                    if (data.auto_update_pwd_frequency != "0") var auto_update_pwd = "<i class='fa fa-lg fa-shield tip' title='<?php echo addslashes($LANG['server_auto_update_password_enabled_tip']); ?>'></i>&nbsp;<b>"+data.auto_update_pwd_frequency+"</b>&nbsp;|&nbsp;";
                     else var auto_update_pwd = "";
-                    $("#item_viewed_x_times").html(auto_update_pwd+"&nbsp;<i class='fa fa-sticky-note-o tip' title='Number of times item was displayed'></i>&nbsp;<b>"+data.viewed_no+"</b>");
+                    $("#item_viewed_x_times").html(auto_update_pwd+"&nbsp;<i class='fa fa-lg fa-eye tip'></i>&nbsp;<b>"+data.viewed_no+"</b>");
 
                     // Show timestamp
                     $("#timestamp_item_displayed").val(data.timestamp);
@@ -1633,6 +1634,7 @@ function AfficherDetailsItem(id, salt_key_required, expired_item, restricted, di
                     //$("#item_history_log, #edit_past_pwds, #hid_files, #item_edit_list_files").html("");
 
                     //Show detail item
+                    $("#items_content").show();
                     if (data.show_detail_option == "0") {
                         $("#item_details_ok").removeClass("hidden");
                         $("#item_details_expired, #item_details_expired_full").addClass("hidden");
@@ -1663,7 +1665,7 @@ function AfficherDetailsItem(id, salt_key_required, expired_item, restricted, di
                         
                         $("#hid_pw").text(unsanitizeString(data.pw));
                         if (data.url != "") {
-                            $("#id_url").html(data.url+data.link);
+                            $("#id_url").html(data.link + data.url);
                             $("#hid_url").val(data.url);
                         } else {
                             $("#id_url").html("");
@@ -2045,6 +2047,7 @@ function showDetailsStep2(id, param)
             $("#div_loading").addClass("hidden");
 
             $(".tip").tooltipster({multiple: true});
+            $("#items_content").addClass("hidden");
 
             // refresh
             if ($("#hid_cat").val() !== "") {
@@ -2067,9 +2070,9 @@ function ActionOnQuickIcon(id, action)
         quick_icon_query_status = false;
         //change quick icon
         if (action == 1) {
-            $("#quick_icon_fav_"+id).html("<i class='fa fa-sm fa-star mi-yellow' onclick='ActionOnQuickIcon("+id+",0)'></i>");
+            $("#quick_icon_fav_"+id).html("<i class='fa fa-lg fa-star mi-yellow' onclick='ActionOnQuickIcon("+id+",0)'></i>");
         } else if (action == 0) {
-            $("#quick_icon_fav_"+id).html("<i class='fa fa-sm fa-star-o' onclick='ActionOnQuickIcon("+id+",1)'></i>");
+            $("#quick_icon_fav_"+id).html("<i class='fa fa-lg fa-star-o' onclick='ActionOnQuickIcon("+id+",1)'></i>");
         }
 
 
@@ -2885,15 +2888,6 @@ $(function() {
         }
     });
 
-    // manage item div resize
-    $( "#item_details_scroll" ).resizable({handles: {'s': '#handle'}});
-    $("#handle").dblclick(function() {
-        var inner = $("#item_details_scroll").find('table');
-        var current_height = $("#item_details_scroll").height();
-        $("#item_details_scroll").animate({top:'+='+(current_height-inner.height())}, 0);
-        $("#item_details_scroll").height(inner.outerHeight(true));
-    });
-
     $('#toppathwrap').addClass("hidden");
     if ($(".tr_fields") != undefined) $(".tr_fields").addClass("hidden");
     //Expend/Collapse jstree
@@ -2938,16 +2932,11 @@ $(function() {
     }
 
     // Autoresize Textareas
-    $(".items_tree, #items_content").addClass("ui-corner-all");
+    //$(".items_tree, #items_content").addClass("ui-corner-all");
 
     //automatic height
     var window_height = $(window).height();
-    $("#div_items, #content").height(window_height-130);
-    $("#items_center").height(window_height-360);
-    $("#items_list").height(window_height-410);
-    $(".items_tree").height(window_height-140);
-    $("#items_content").height(window_height-130);
-    $("#jstree").height(window_height-185);
+    $("#items_content").hide();
 
     //warning if screen height too short
     if (parseInt(window_height-440) <= 30) {
@@ -4968,7 +4957,7 @@ function globalItemsSearch()
                 data = prepareExchangedData(data , "decode", "<?php echo $_SESSION['key']; ?>");
                 displayMessage(data.message);
                 $("#items_path_var").html('<i class="fa fa-filter"></i>&nbsp;<?php echo addslashes($LANG['search_results']); ?>');
-                $("#items_list").html("<ul class='liste_items 'id='full_items_list'></ul>");
+                $("#items_list").html("<ul class='liste_items list-group' id='full_items_list'></ul>");
 
                 // Build HTML list
                 $.each(data.html_json, function(i, value) {
@@ -5053,7 +5042,7 @@ function searchItemsWithTags(tag)
             data = prepareExchangedData(data , "decode", "<?php echo $_SESSION['key']; ?>");
             displayMessage(data.message);
             $("#items_path_var").html('<i class="fa fa-filter"></i>&nbsp;<?php echo addslashes($LANG['search_results']); ?>');
-            $("#items_list").html("<ul class='liste_items 'id='full_items_list'></ul>");
+            $("#items_list").html("<ul class='liste_items list-group' id='full_items_list'></ul>");
             // Build HTML list
             $.each(data.html_json, function(i, value) {
                 // Prepare Description

@@ -1,54 +1,8 @@
-body{
-width: 1000px;
-margin-left: auto;
-margin-right: auto;
-/*background: #F0F0F0 url(../images/stripe.png) repeat;*/
-background: #000000 url(../images/canevas/background_cell.jpg) repeat;
-font-family: sans-serif;
-font-size:11pt;
-}
-
-#top{
-width: 980px;
-height: 35px;
-margin-left: auto;
-margin-right: auto;
-padding: 10px;
-/*background: #F0F0F0 url(../images/stripe_footer.png) repeat;*/
-font-family: sans-serif;
-font-size: 10px;
-display:block;
-background-image: url(../images/canevas/menu_top_bckg.png);
-}
-
 #logo{
 float:left;
 margin-right: 5px;
 margin-top: -5px;
 margin-left: -5px;
-}
-
-#menu_top{
-float:left;
-}
-
-#footer{
-width: 980px;
-height: 20px;
-line-height: 16px;
-margin: 10px auto 0 auto;
-padding: 10px;
-background-image: url(../images/canevas/menu_top_bckg.png);
-font-family: sans-serif;
-font-size: 10px;
-color: #F0F0F0;
-}
-
-#div_right_menu{
-  position:absolute;
-  margin:54px -32px 0 1000px;
-  background-image: url(../images/canevas/menu_top_bckg.png);
-  padding:5px;
 }
 
 #div_last_items{
@@ -58,15 +12,8 @@ color: #F0F0F0;
   font-size: 12px;
 }
 
-#main{
-padding: 10px;
-margin-top: 10px;
-min-height: 250px;
-background:white url(../images/canevas/logo_home.png) 50% 50% no-repeat;
-}
-
 #main_simple{
-margin-top: 10px;
+  margin-top: 10px;
 }
 
 #title {

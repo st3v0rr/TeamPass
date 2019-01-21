@@ -1845,7 +1845,7 @@ if (null !== $post_type) {
                 $arrData['url'] = htmlspecialchars_decode($dataItem['url']);
                 $arrData['folder'] = $dataItem['id_tree'];
                 if (empty($dataItem['url']) === false) {
-                    $arrData['link'] = "&nbsp;<a href='".$dataItem['url']."' target='_blank'>&nbsp;<i class='fa fa-link tip' title='".$LANG['open_url_link']."'></i></a>";
+                    $arrData['link'] = "<a href='".$dataItem['url']."' target='_blank'><i class='mr-3 fa fa-link tip' title='".$LANG['open_url_link']."'></i></a>";
                 }
 
                 $arrData['description'] = preg_replace('/(?<!\\r)\\n+(?!\\r)/', '', strip_tags($dataItem['description'], $SETTINGS_EXT['allowedTags']));
