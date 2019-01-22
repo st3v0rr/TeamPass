@@ -1,6 +1,7 @@
 *.bak
 .idea
 volumes
+dist
 _utils/
 *.bck
 *.201*
@@ -8,3 +9,11 @@ install1/
 backups/*.sql
 includes/libraries/Email/Phpmailer_/*
 includes/libraries/Authentication/Yubico/php-yubico-master/*
+includes/libraries/csrfp/libs/csrfp.config.php
+includes/config/tp.config.php
+includes/config/settings.php
+includes/teampass-seckey.txt
+includes/sk.php
+files/ldap.debug.txt
+deployTest.ps1
+deployProd.ps1
